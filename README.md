@@ -1,4 +1,5 @@
-该项目  转自https://github.com/jeamking/jeeidp.git，再此基础上写一些自己的小案例
+该项目  转自https://github.com/jeamking/jeeidp.git，
+在此基础上写一些自己的小案例
 
 
 ### jeeidp智能开发平台
