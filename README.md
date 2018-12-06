@@ -1,4 +1,4 @@
-该项目  转自https://github.com/jeamking/jeeidp.git，
+该项目  转自https://github.com/jeamking/jeeidp.git
 在此基础上写一些自己的小案例
 
 
