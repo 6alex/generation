@@ -1,3 +1,6 @@
+该项目  转自https://github.com/jeamking/jeeidp.git，再此基础上写一些自己的小案例
+
+
 ### jeeidp智能开发平台
 当前最新版本：1.0
  
