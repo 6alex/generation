@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idp.web.cms.dao.TCmsDao">
+
+	<parameterMap id="parameterMap" type="com.idp.web.cms.entity.TCms"></parameterMap>
+	<resultMap id="resultMap" type="com.idp.web.cms.entity.TCms">
+		<result property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="author" column="author"/>
+		<result property="imgs" column="imgs"/>
+		<result property="links" column="links"/>
+		<result property="attachment" column="attachment"/>
+		<result property="sort" column="sort"/>
+		<result property="columnId" column="column_id"/>
+		<result property="createUser" column="create_user"/>
+		<result property="createDate" column="create_date"/>
+		<result property="updateUser" column="update_user"/>
+		<result property="updateDate" column="update_date"/>
+	</resultMap>
+	
+	<sql id="columnSql">
+		<trim suffixOverrides=",">
+			t.id,
+			t.title,
+			t.content,
+			t.author,
+			t.imgs,
+			t.links,
+			t.attachment,
+			t.sort,
+			t.column_id,
+			t.create_user,
+			t.create_date,
+			t.update_user,
+			t.update_date,
+	 	</trim>
+	</sql>
+	
+	<select id="find" parameterMap="parameterMap" resultMap="resultMap">
+		select
+			<include refid="columnSql"></include>
+		from t_cms t
+		<where>
+		</where>
+	</select>
+	
+	<select id="getById" parameterType="java.lang.String" resultMap="resultMap">
+		select
+			<include refid="columnSql"></include>
+		from t_cms t
+		where t.id = #{value}
+	</select>
+	
+	<insert id="add" parameterMap="parameterMap">
+		insert into t_cms
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			title,
+			content,
+			author,
+			imgs,
+			links,
+			attachment,
+			sort,
+			column_id,
+			create_user,
+			create_date,
+			update_user,
+			update_date,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id},
+			#{title},
+			#{content},
+			#{author},
+			#{imgs},
+			#{links},
+			#{attachment},
+			#{sort},
+			#{columnId},
+			#{createUser},
+			#{createDate},
+			#{updateUser},
+			#{updateDate},
+		</trim>
+	</insert>
+	
+	<insert id="batchAdd" parameterType="java.util.List">
+		insert into t_cms
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			title,
+			content,
+			author,
+			imgs,
+			links,
+			attachment,
+			sort,
+			column_id,
+			create_user,
+			create_date,
+			update_user,
+			update_date,
+		</trim>
+		values
+		<foreach collection="list" item="item" separator=",">
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				#{item.id},
+				#{item.title},
+				#{item.content},
+				#{item.author},
+				#{item.imgs},
+				#{item.links},
+				#{item.attachment},
+				#{item.sort},
+				#{item.columnId},
+				#{item.createUser},
+				#{item.createDate},
+				#{item.updateUser},
+				#{item.updateDate},
+			</trim>
+		</foreach>
+	</insert>
+	
+	<update id="update" parameterMap="parameterMap">
+		update t_cms
+		<set>
+			title = #{title},
+			content = #{content},
+			author = #{author},
+			imgs = #{imgs},
+			links = #{links},
+			attachment = #{attachment},
+			sort = #{sort},
+			column_id = #{columnId},
+			create_user = #{createUser},
+			create_date = #{createDate},
+			update_user = #{updateUser},
+			update_date = #{updateDate},
+		</set>
+		where id = #{id}
+	</update>
+	
+	<update id="updateNotNull" parameterMap="parameterMap">
+		update t_cms
+		<set>
+			<if test="title != null">
+			title = #{title},
+			</if>
+			<if test="content != null">
+			content = #{content},
+			</if>
+			<if test="author != null">
+			author = #{author},
+			</if>
+			<if test="imgs != null">
+			imgs = #{imgs},
+			</if>
+			<if test="links != null">
+			links = #{links},
+			</if>
+			<if test="attachment != null">
+			attachment = #{attachment},
+			</if>
+			<if test="sort != null">
+			sort = #{sort},
+			</if>
+			<if test="columnId != null">
+			column_id = #{columnId},
+			</if>
+			<if test="createUser != null">
+			create_user = #{createUser},
+			</if>
+			<if test="createDate != null">
+			create_date = #{createDate},
+			</if>
+			<if test="updateUser != null">
+			update_user = #{updateUser},
+			</if>
+			<if test="updateDate != null">
+			update_date = #{updateDate},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		delete from t_cms where id = #{value}
+	</delete>
+	
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from t_cms where id in
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+</mapper>

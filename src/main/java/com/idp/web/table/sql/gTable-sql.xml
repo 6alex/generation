@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idp.web.table.dao.GTableDao">
+
+	<parameterMap id="parameterMap" type="com.idp.web.table.entity.GTable"></parameterMap>
+	<resultMap id="resultMap" type="com.idp.web.table.entity.GTable">
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="code" column="code"/>
+		<result property="defaultValue" column="default_value"/>
+		<result property="isNull" column="is_null"/>
+		<result property="comment" column="comment"/>
+		<result property="groupId" column="group_id"/>
+		<result property="sort" column="sort"/>
+	</resultMap>
+	
+	<sql id="columnSql">
+		<trim suffixOverrides=",">
+			t.id,
+			t.name,
+			t.code,
+			t.default_value,
+			t.is_null,
+			t.comment,
+			t.group_id,
+			t.sort,
+	 	</trim>
+	</sql>
+	
+	<select id="find" parameterMap="parameterMap" resultMap="resultMap">
+		select
+			<include refid="columnSql"></include>
+		from g_table t
+		<where>
+		    <if test="name != null">
+			and t.name = #{name}
+			</if>
+			<if test="code != null">
+			and t.code = #{code}
+			</if>
+			<if test="defaultValue != null">
+			and t.default_value = #{defaultValue},
+			</if>
+			<if test="isNull != null">
+			and t.is_null = #{isNull}
+			</if>
+			<if test="comment != null">
+			and t.comment = #{comment}
+			</if>
+			<if test="groupId != null">
+			 and t.group_id = #{groupId}
+			</if>
+			<if test="sort != null">
+			 and t.sort = #{sort}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getById" parameterType="java.lang.String" resultMap="resultMap">
+		select
+			<include refid="columnSql"></include>
+		from g_table t
+		where t.id = #{value}
+	</select>
+	
+	<select id="getByGroupId" parameterType="java.lang.String" resultMap="resultMap">
+		select
+			<include refid="columnSql"></include>
+		from g_table t
+		where t.group_id = #{value}
+	</select>
+	
+	<select id="getByGroupCode" parameterType="java.lang.String" resultMap="resultMap">
+		select
+			<include refid="columnSql"></include>
+		from g_table t
+		where t.code = #{value}
+	</select>
+	
+	<insert id="add" parameterMap="parameterMap">
+		insert into g_table
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			name,
+			code,
+			default_value,
+			is_null,
+			comment,
+			group_id,
+			sort,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id},
+			#{name},
+			#{code},
+			#{defaultValue},
+			#{isNull},
+			#{comment},
+			#{groupId},
+			#{sort},
+		</trim>
+	</insert>
+	
+	<insert id="batchAdd" parameterType="java.util.List">
+		insert into g_table
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			name,
+			code,
+			default_value,
+			is_null,
+			comment,
+			group_id,
+			sort,
+		</trim>
+		values
+		<foreach collection="list" item="item" separator=",">
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				#{item.id},
+				#{item.name},
+				#{item.code},
+				#{item.defaultValue},
+				#{item.isNull},
+				#{item.comment},
+				#{item.groupId},
+				#{item.sort},
+			</trim>
+		</foreach>
+	</insert>
+	
+	<update id="update" parameterMap="parameterMap">
+		update g_table
+		<set>
+			name = #{name},
+			code = #{code},
+			default_value = #{defaultValue},
+			is_null = #{isNull},
+			comment = #{comment},
+			group_id = #{groupId},
+			sort = #{sort},
+		</set>
+		where id = #{id}
+	</update>
+	
+	<update id="updateNotNull" parameterMap="parameterMap">
+		update g_table
+		<set>
+			<if test="name != null">
+			name = #{name},
+			</if>
+			<if test="code != null">
+			code = #{code},
+			</if>
+			<if test="defaultValue != null">
+			default_value = #{defaultValue},
+			</if>
+			<if test="isNull != null">
+			is_null = #{isNull},
+			</if>
+			<if test="comment != null">
+			comment = #{comment},
+			</if>
+			<if test="groupId != null">
+			group_id = #{groupId},
+			</if>
+			<if test="sort != null">
+			sort = #{sort},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		delete from g_table where id = #{value}
+	</delete>
+	
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from g_table where id in
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<delete id="deleteByGroupId" parameterType="java.lang.String">
+		delete from g_table where group_id = #{value}
+	</delete>
+	
+</mapper>
