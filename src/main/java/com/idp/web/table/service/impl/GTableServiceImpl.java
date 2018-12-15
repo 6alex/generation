@@ -64,11 +64,9 @@ public class GTableServiceImpl implements GTableService {
 
 	@Override
 	public GTable getById(String id) {
-
 		GTable table = gTableDao.getById(id);
 		GTable model = new GTable();
 		model.setGroupId(id);
-		gTableDao.find(model);
 		table.setChildren(gTableDao.find(model));
 		return table;
 

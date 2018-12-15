@@ -21,16 +21,16 @@ import net.sf.json.JSONObject;
  * 
  * <pre>
  * 	历史记录：
- * 	2018-12-03 wencun
+ * 	2018-12-07 wen
  * 	新建文件
  * </pre>
  * 
  * @author 
  * <pre>
  * SD
- * 	wencun
+ * 	wen
  * PG
- *	wencun
+ *	wen
  * UT
  *
  * MA
@@ -52,7 +52,7 @@ public class TCmsController extends BaseController {
 	/**
 	 * 
 	 * <pre>
-	 * 	2018-12-03 wencun
+	 * 	2018-12-07 wen
 	 * 	初始化查询页面
 	 * </pre>
 	 * 
@@ -67,7 +67,7 @@ public class TCmsController extends BaseController {
 	/**
 	 * 
 	 * <pre>
-	 * 	2018-12-03 wencun
+	 * 	2018-12-07 wen
 	 * 	分页查询
 	 * </pre>
 	 * 
@@ -93,7 +93,7 @@ public class TCmsController extends BaseController {
 	/**
 	 * 
 	 * <pre>
-	 * 	2018-12-03 wencun
+	 * 	2018-12-07 wen
 	 * 	新增修改页面初始化
 	 * </pre>
 	 * 
@@ -122,7 +122,7 @@ public class TCmsController extends BaseController {
 	/**
 	 * 
 	 * <pre>
-	 * 	2018-12-03 wencun
+	 * 	2018-12-07 wen
 	 * 	保存
 	 * </pre>
 	 * 
@@ -160,7 +160,7 @@ public class TCmsController extends BaseController {
 	/**
 	 * 
 	 * <pre>
-	 * 	2018-12-03 wencun
+	 * 	2018-12-07 wen
 	 * 	删除
 	 * </pre>
 	 * 

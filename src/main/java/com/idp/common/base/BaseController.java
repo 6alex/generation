@@ -15,6 +15,8 @@ import com.idp.common.interceptor.DateConvertEditor;
 import com.idp.common.util.ContextHolderUtil;
 import com.idp.web.system.entity.SysUser;
 
+import net.sf.json.JSONObject;
+
 /**
  * 基础controller
  * 
@@ -64,5 +66,27 @@ public class BaseController {
 		SysUser user = (SysUser)session.getAttribute(SessionAttr.USER_LOGIN.getValue());
 		
 		return user;
+	}
+	
+	public String returnBlankResult(){
+		JSONObject result = new JSONObject();
+		result.put("msg", "数据为空！");
+		result.put("code", "1");
+		return result.toString();
+	}
+	
+	public String returnExceptionResult(String msg){
+		JSONObject result = new JSONObject();
+		result.put("msg", msg);
+		result.put("code", "1");
+		return result.toString();
+	}
+	
+	public String returnSuccessResult(JSONObject data){
+		JSONObject result = new JSONObject();
+		result.put("msg", "成功");
+		result.put("code", "0");
+		result.put("data", data);
+		return result.toString();
 	}
 }

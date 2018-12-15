@@ -17,16 +17,16 @@ import com.idp.common.util.ResourceUtils;
  * 
  * <pre>
  * 	历史记录：
- * 	2018-12-03 wencun
+ * 	2018-12-07 wen
  * 	新建文件
  * </pre>
  * 
  * @author 
  * <pre>
  * SD
- * 	wencun
+ * 	wen
  * PG
- *	wencun
+ *	wen
  * UT
  *
  * MA

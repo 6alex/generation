@@ -42,6 +42,51 @@
 			<include refid="columnSql"></include>
 		from t_cms t
 		<where>
+			<if test="id != null and id != ''">
+				and t.id = #{id}			
+			</if>
+			<if test="title != null and title != ''">
+				and t.title like concat('%',#{title},'%')
+			</if>
+			<if test="content != null and content != ''">
+				and t.content = #{content}			
+			</if>
+			<if test="author != null and author != ''">
+				and t.author = #{author}			
+			</if>
+			<if test="imgs != null and imgs != ''">
+				and t.imgs = #{imgs}			
+			</if>
+			<if test="links != null and links != ''">
+				and t.links = #{links}			
+			</if>
+			<if test="attachment != null and attachment != ''">
+				and t.attachment = #{attachment}			
+			</if>
+			<if test="sort != null and sort != ''">
+				and t.sort = #{sort}			
+			</if>
+			<if test="columnId != null and columnId != ''">
+				and t.column_id = #{columnId}			
+			</if>
+			<if test="createUser != null and createUser != ''">
+				and t.create_user = #{createUser}			
+			</if>
+			<if test="createDateStart != null and createDateStart != ''">
+				and t.create_date >= #{createDateStart}
+			</if>
+			<if test="createDateEnd != null and createDateEnd != ''">
+				and t.create_date <![CDATA[<]]> #{createDateEnd} 
+			</if>
+			<if test="updateUser != null and updateUser != ''">
+				and t.update_user = #{updateUser}			
+			</if>
+			<if test="updateDateStart != null and updateDateStart != ''">
+				and t.update_date >= #{updateDateStart}
+			</if>
+			<if test="updateDateEnd != null and updateDateEnd != ''">
+				and t.update_date <![CDATA[<]]> #{updateDateEnd} 
+			</if>
 		</where>
 	</select>
 	

@@ -1,10 +1,12 @@
 package com.idp.web.table.controller;
 
-import com.idp.web.table.entity.GTable;
-import com.idp.web.table.service.GTableService;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.ibatis.type.JdbcType;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.idp.common.base.BaseController;
 import com.idp.common.persistence.Page;
 import com.idp.common.util.ValidateUtils;
+import com.idp.web.table.entity.GTable;
+import com.idp.web.table.service.GTableService;
 
 import net.sf.json.JSONObject;
 
@@ -109,7 +113,7 @@ public class GTableController extends BaseController {
 	public String gTable(String id, HttpServletRequest request) {
 
 		try {
-
+			request.setAttribute("dbColumnTypes", JdbcType.values());
 			if (ValidateUtils.isNotEmpty(id)) {
 
 				GTable gTable = gTableService.getById(id);
@@ -121,6 +125,36 @@ public class GTableController extends BaseController {
 		}
 
 		return "table/gTable";
+	}
+
+	/**
+	 * @Description: 自动生成表sql语句建表
+	 * @param id
+	 * @param request
+	 * @return
+	 * @return: String
+	 * @author: Alex.wen
+	 * @date: 2018年12月8日 上午11:42:37
+	 */
+	@RequestMapping("/generation")
+	@ResponseBody
+	public String generation(String id, HttpServletRequest request) {
+		JSONObject result=new JSONObject();
+		try {
+			GTable gTable = gTableService.getById(id);
+			if(null==gTable){
+				return returnBlankResult();
+			}
+			List<GTable> children = gTable.getChildren();
+			if(CollectionUtils.isEmpty(children)){
+				return returnExceptionResult("请添加表字段！");
+			}
+		} catch (Exception e) {
+
+			logger.error(e.getMessage(), e);
+		}
+
+		return null;
 	}
 
 	/**
