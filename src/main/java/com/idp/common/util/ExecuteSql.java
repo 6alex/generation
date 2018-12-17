@@ -61,6 +61,15 @@ public class ExecuteSql {
 		return JdbcUtils.executeUpdate(conn, sql, parameters);
 	}
 
+	/**   
+	 * @Description:  
+	 * @param tableName 表名
+	 * @param data Map<String, Object>   column  value
+	 * @throws SQLException  
+	 * @return: void    
+	 * @author: Alex.wen  
+	 * @date:   2018年12月17日 下午1:46:32
+	 */
 	public static void insert(String tableName, Map<String, Object> data) throws SQLException {
 		JdbcUtils.insertToTable(conn, tableName, data);
 	}
