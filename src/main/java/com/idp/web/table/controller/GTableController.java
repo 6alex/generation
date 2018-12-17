@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.idp.common.base.BaseController;
 import com.idp.common.persistence.Page;
+import com.idp.common.util.ExecuteDDL;
 import com.idp.common.util.ValidateUtils;
 import com.idp.web.table.entity.GTable;
 import com.idp.web.table.service.GTableService;
@@ -113,7 +115,8 @@ public class GTableController extends BaseController {
 	public String gTable(String id, HttpServletRequest request) {
 
 		try {
-			request.setAttribute("dbColumnTypes", JdbcType.values());
+			String dbColumnTypes[]={"varchar(32)","varchar(255)","datetime","mediumtext","int(11)","double(11,4)","decimal(20,4)","bigint(20)"};
+			request.setAttribute("dbColumnTypes", dbColumnTypes);
 			if (ValidateUtils.isNotEmpty(id)) {
 
 				GTable gTable = gTableService.getById(id);
@@ -139,22 +142,47 @@ public class GTableController extends BaseController {
 	@RequestMapping("/generation")
 	@ResponseBody
 	public String generation(String id, HttpServletRequest request) {
-		JSONObject result=new JSONObject();
+		JSONObject result = new JSONObject();
 		try {
 			GTable gTable = gTableService.getById(id);
-			if(null==gTable){
+			if (null == gTable) {
 				return returnBlankResult();
 			}
 			List<GTable> children = gTable.getChildren();
-			if(CollectionUtils.isEmpty(children)){
+			if (CollectionUtils.isEmpty(children)) {
 				return returnExceptionResult("请添加表字段！");
 			}
+			StringBuffer tempSql = new StringBuffer();
+			tempSql.append("CREATE TABLE `" + gTable.getCode() + "` (\n");
+			tempSql.append("`id` varchar(32) COLLATE utf8_unicode_ci NOT NULL,\n");// 默认生成主键id
+			tempSql.append("`create_user` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人员',\n");// 默认生成创建人员
+			tempSql.append("`create_date` datetime DEFAULT NULL COMMENT '创建时间',\n");
+			tempSql.append("`update_user` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '修改人员',\n");
+			tempSql.append("`update_date` datetime DEFAULT NULL COMMENT '修改日期',\n");
+			String isNull = "";
+			String defaultValue = "";
+			for (GTable chid : children) {
+				if ("1".equals(chid.getIsNull())) {
+					isNull = " NOT NULL ";
+				}
+				if (StringUtils.isNotBlank(chid.getDefaultValue())) {
+					defaultValue = " DEFAULT " + chid.getDefaultValue();
+				}
+				tempSql.append("`" + chid.getName() + "` " + chid.getCode() + " COLLATE utf8_unicode_ci " + isNull +defaultValue
+						+ " COMMENT '" + chid.getComment() + "',\n");
+			}
+			tempSql.append("PRIMARY KEY (`id`)\n");
+			tempSql.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='"
+					+ gTable.getComment() + "';");
+			result.put("crerateTableSql", tempSql.toString());
+			ExecuteDDL.initParam("dbconfig.properties");
+			ExecuteDDL.createTale(tempSql.toString());
+			result.put("tableName", gTable.getCode());
+			return returnSuccessResult(result);
 		} catch (Exception e) {
-
 			logger.error(e.getMessage(), e);
+			return returnExceptionResult(e.getMessage());
 		}
-
-		return null;
 	}
 
 	/**

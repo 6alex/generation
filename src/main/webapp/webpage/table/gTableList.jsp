@@ -25,7 +25,7 @@
 					<a href="javascript:;" class="btn btn-sm red" onclick="del('/gTable/delete?id=${gTable.id}')">
 						<i class="fa fa-trash"></i>删除
 					</a>
-					<a href="javascript:;" class="btn btn-sm purple" onclick="generation('/gTable/generation?id=${gTable.id}')">
+					<a href="javascript:;" class="btn btn-sm purple" onclick="generation('gTable/generation?id=${gTable.id}')">
 						<i class="fa fa-external-link"></i>自动建表
 					</a>
 				</td>
@@ -35,3 +35,30 @@
 	</table>
 </div>
 <div class="pageination-panel">${page}</div>
+<script type="text/javascript">
+	function generation(url){
+		$.ajax({
+			type: 'post',
+			url: url,
+			data:null,
+			dataType: 'json',
+			success: function(data){
+				if(data.code=='0'){
+					alert("生成成功！"+data.data.tableName);
+				}else{
+					alert("生成失败！"+data.msg);
+				}
+			},
+			error:function(data){
+				alert("服务异常！");
+			}
+		});
+		
+	}
+
+
+
+
+
+
+</script>

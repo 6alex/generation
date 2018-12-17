@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idp.web.weixin.dao.WeixinDao">
+
+	<parameterMap id="parameterMap" type="com.idp.web.weixin.entity.Weixin"></parameterMap>
+	<resultMap id="resultMap" type="com.idp.web.weixin.entity.Weixin">
+		<result property="id" column="id"/>
+		<result property="createUser" column="create_user"/>
+		<result property="createDate" column="create_date"/>
+		<result property="updateUser" column="update_user"/>
+		<result property="updateDate" column="update_date"/>
+		<result property="header" column="header"/>
+		<result property="content" column="content"/>
+	</resultMap>
+	
+	<sql id="columnSql">
+		<trim suffixOverrides=",">
+			t.id,
+			t.create_user,
+			t.create_date,
+			t.update_user,
+			t.update_date,
+			t.header,
+			t.content,
+	 	</trim>
+	</sql>
+	
+	<select id="find" parameterMap="parameterMap" resultMap="resultMap">
+		select
+			<include refid="columnSql"></include>
+		from weixin t
+		<where>
+			<if test="id != null and id != ''">
+				and t.id = #{id}			
+			</if>
+			<if test="createUser != null and createUser != ''">
+				and t.create_user = #{createUser}			
+			</if>
+			<if test="createDate != null and createDate != ''">
+				and t.create_date = #{createDate}			
+			</if>
+			<if test="updateUser != null and updateUser != ''">
+				and t.update_user = #{updateUser}			
+			</if>
+			<if test="updateDate != null and updateDate != ''">
+				and t.update_date = #{updateDate}			
+			</if>
+			<if test="header != null and header != ''">
+				and t.header like concat('%',#{header},'%')
+			</if>
+			<if test="content != null and content != ''">
+				and t.content = #{content}			
+			</if>
+		</where>
+	</select>
+	
+	<select id="getById" parameterType="java.lang.String" resultMap="resultMap">
+		select
+			<include refid="columnSql"></include>
+		from weixin t
+		where t.id = #{value}
+	</select>
+	
+	<insert id="add" parameterMap="parameterMap">
+		insert into weixin
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			create_user,
+			create_date,
+			update_user,
+			update_date,
+			header,
+			content,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id},
+			#{createUser},
+			#{createDate},
+			#{updateUser},
+			#{updateDate},
+			#{header},
+			#{content},
+		</trim>
+	</insert>
+	
+	<insert id="batchAdd" parameterType="java.util.List">
+		insert into weixin
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			create_user,
+			create_date,
+			update_user,
+			update_date,
+			header,
+			content,
+		</trim>
+		values
+		<foreach collection="list" item="item" separator=",">
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				#{item.id},
+				#{item.createUser},
+				#{item.createDate},
+				#{item.updateUser},
+				#{item.updateDate},
+				#{item.header},
+				#{item.content},
+			</trim>
+		</foreach>
+	</insert>
+	
+	<update id="update" parameterMap="parameterMap">
+		update weixin
+		<set>
+			create_user = #{createUser},
+			create_date = #{createDate},
+			update_user = #{updateUser},
+			update_date = #{updateDate},
+			header = #{header},
+			content = #{content},
+		</set>
+		where id = #{id}
+	</update>
+	
+	<update id="updateNotNull" parameterMap="parameterMap">
+		update weixin
+		<set>
+			<if test="createUser != null">
+			create_user = #{createUser},
+			</if>
+			<if test="createDate != null">
+			create_date = #{createDate},
+			</if>
+			<if test="updateUser != null">
+			update_user = #{updateUser},
+			</if>
+			<if test="updateDate != null">
+			update_date = #{updateDate},
+			</if>
+			<if test="header != null">
+			header = #{header},
+			</if>
+			<if test="content != null">
+			content = #{content},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		delete from weixin where id = #{value}
+	</delete>
+	
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from weixin where id in
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+</mapper>

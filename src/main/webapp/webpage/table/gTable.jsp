@@ -77,28 +77,28 @@
 									<div class="input-icon right">
 										<i class="fa"></i> <input type="text"
 											name="children[${vs.index}].name" class="form-control"
-											value="${child.name}" required />
+											value="${child.name}"  required/>
 									</div>
 								</td>
 								<td>
 									<div class="input-icon right">
 										<i class="fa"></i> <input type="text"
 											name="children[${vs.index}].defaultValue"
-											class="form-control" value="${child.defaultValue}" required />
+											class="form-control" value="${child.defaultValue}"  />
 									</div>
 								</td>
 								<td>
 									<div class="input-icon right">
 										<i class="fa"></i> <input type="text"
 											name="children[${vs.index}].isNull" class="form-control"
-											value="${child.isNull}" required />
+											value="${child.isNull}"  />
 									</div>
 								</td>
 								<td>
 									<div class="input-icon right">
 										<i class="fa"></i> <input type="text"
 											name="children[${vs.index}].comment" class="form-control"
-											value="${child.comment}" required />
+											value="${child.comment}"  />
 									</div>
 								</td>
 								<td>
@@ -146,26 +146,26 @@
 					<td>
 						<div class="input-icon right">
 							<i class="fa"></i> <input type="text"
-								name="children[#index#].name" class="form-control" required />
+								name="children[#index#].name" class="form-control"  required/>
 						</div>
 					</td>
 					<td>
 						<div class="input-icon right">
 							<i class="fa"></i> <input type="text"
 								name="children[#index#].defaultValue" class="form-control"
-								required />
+								 />
 						</div>
 					</td>
 					<td>
 						<div class="input-icon right">
 							<i class="fa"></i> <input type="text"
-								name="children[#index#].isNull" class="form-control" required />
+								name="children[#index#].isNull" class="form-control"  />
 						</div>
 					</td>
 					<td>
 						<div class="input-icon right">
 							<i class="fa"></i> <input type="text"
-								name="children[#index#].comment" class="form-control" required />
+								name="children[#index#].comment" class="form-control"  />
 						</div>
 					</td>
 					<td>
