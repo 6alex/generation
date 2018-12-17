@@ -69,12 +69,22 @@
 		insert into ${tableName}
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<#list columns as po>
+			<#if UUID=="false" && po.columnName!="id">
 			${po.columnName},
+			</#if>
+			<#if UUID=="true">
+			${po.columnName},
+			</#if>
 			</#list>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<#list columns as po>
+			<#if UUID=="false" && po.columnName!="id">
 			${'#'}{${po.fieldName}},
+			</#if>
+			<#if UUID=="true">
+			${'#'}{${po.fieldName}},
+			</#if>
 			</#list>
 		</trim>
 	</insert>
@@ -83,14 +93,24 @@
 		insert into ${tableName}
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<#list columns as po>
+			<#if UUID=="false" && po.columnName!="id">
 			${po.columnName},
+			</#if>
+			<#if UUID=="true">
+			${po.columnName},
+			</#if>
 			</#list>
 		</trim>
 		values
 		<foreach collection="list" item="item" separator=",">
 			<trim prefix="(" suffix=")" suffixOverrides=",">
 			<#list columns as po>
-				${'#'}{item.${po.fieldName}},
+				<#if UUID=="false" && po.columnName!="id">
+				${'#'}{${po.fieldName}},
+				</#if>
+				<#if UUID=="true">
+				${'#'}{${po.fieldName}},
+				</#if>
 			</#list>
 			</trim>
 		</foreach>

@@ -94,12 +94,12 @@
 		values
 		<foreach collection="list" item="item" separator=",">
 			<trim prefix="(" suffix=")" suffixOverrides=",">
-				#{item.createUser},
-				#{item.createDate},
-				#{item.updateUser},
-				#{item.updateDate},
-				#{item.header},
-				#{item.content},
+				#{createUser},
+				#{createDate},
+				#{updateUser},
+				#{updateDate},
+				#{header},
+				#{content},
 			</trim>
 		</foreach>
 	</insert>
