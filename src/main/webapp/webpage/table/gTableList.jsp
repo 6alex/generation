@@ -26,7 +26,10 @@
 						<i class="fa fa-trash"></i>删除
 					</a>
 					<a href="javascript:;" class="btn btn-sm purple" onclick="generation('gTable/generation?id=${gTable.id}')">
-						<i class="fa fa-external-link"></i>自动建表
+						<i class="fa fa-external-link"></i>自动建表(UUID)
+					</a>
+					<a href="javascript:;" class="btn btn-sm purple" onclick="generation('gTable/generation?id=${gTable.id}&auto=1')">
+						<i class="fa fa-external-link"></i>自动建表(bigint)
 					</a>
 				</td>
 			</tr>

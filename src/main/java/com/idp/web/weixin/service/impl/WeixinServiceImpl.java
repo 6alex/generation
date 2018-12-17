@@ -64,8 +64,6 @@ public class WeixinServiceImpl implements WeixinService {
 
 	@Override
 	public void add(Weixin weixin) {
-
-		weixin.setId(ResourceUtils.getUUID());
 		weixinDao.add(weixin);
 	}
 	

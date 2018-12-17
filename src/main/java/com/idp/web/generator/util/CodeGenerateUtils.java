@@ -108,6 +108,11 @@ public class CodeGenerateUtils extends CodePathUtils {
 				data.put("pkField", column.getFieldName());
 				data.put("pkType", column.getFieldType());
 				data.put("pkColumn", column.getColumnName());
+				if("varchar".equals(column.getColumnType())){
+					data.put("UUID", "true");//使用uuid主键生成
+				}else{
+					data.put("UUID", "false");
+				}
 				break;
 			}
 		}

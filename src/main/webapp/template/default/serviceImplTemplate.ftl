@@ -71,8 +71,9 @@ public class ${className}ServiceImpl implements ${className}Service {
 
 	@Override
 	public void add(${className} ${className?uncap_first}) {
-
+		<#if UUID=="true">
 		${className?uncap_first}.set${pkField?cap_first}(ResourceUtils.getUUID());
+		</#if>
 		${className?uncap_first}Dao.add(${className?uncap_first});
 	}
 	

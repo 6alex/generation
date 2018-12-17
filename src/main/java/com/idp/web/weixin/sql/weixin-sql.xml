@@ -64,7 +64,6 @@
 	<insert id="add" parameterMap="parameterMap">
 		insert into weixin
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			id,
 			create_user,
 			create_date,
 			update_user,
@@ -73,7 +72,6 @@
 			content,
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			#{id},
 			#{createUser},
 			#{createDate},
 			#{updateUser},
@@ -86,7 +84,6 @@
 	<insert id="batchAdd" parameterType="java.util.List">
 		insert into weixin
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			id,
 			create_user,
 			create_date,
 			update_user,
@@ -97,7 +94,6 @@
 		values
 		<foreach collection="list" item="item" separator=",">
 			<trim prefix="(" suffix=")" suffixOverrides=",">
-				#{item.id},
 				#{item.createUser},
 				#{item.createDate},
 				#{item.updateUser},

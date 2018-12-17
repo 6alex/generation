@@ -114,7 +114,8 @@ public class GTableController extends BaseController {
 	public String gTable(String id, HttpServletRequest request) {
 
 		try {
-			String dbColumnTypes[]={"varchar(32)","varchar(255)","datetime","mediumtext","int(11)","double(11,4)","decimal(20,4)","bigint(20)"};
+			String dbColumnTypes[] = { "varchar(32)", "varchar(255)", "datetime", "mediumtext", "int(11)",
+					"double(11,4)", "decimal(20,4)", "bigint(20)" };
 			request.setAttribute("dbColumnTypes", dbColumnTypes);
 			if (ValidateUtils.isNotEmpty(id)) {
 
@@ -140,7 +141,7 @@ public class GTableController extends BaseController {
 	 */
 	@RequestMapping("/generation")
 	@ResponseBody
-	public String generation(String id, HttpServletRequest request) {
+	public String generation(String id, String auto, HttpServletRequest request) {
 		JSONObject result = new JSONObject();
 		try {
 			GTable gTable = gTableService.getById(id);
@@ -153,7 +154,11 @@ public class GTableController extends BaseController {
 			}
 			StringBuffer tempSql = new StringBuffer();
 			tempSql.append("CREATE TABLE `" + gTable.getCode() + "` (\n");
-			tempSql.append("`id` varchar(32) COLLATE utf8_unicode_ci NOT NULL,\n");// 默认生成主键id
+			if(StringUtils.isBlank(auto)){
+				tempSql.append("`id` varchar(32) COLLATE utf8_unicode_ci NOT NULL,\n");// 默认生成主键id
+			}else{
+				tempSql.append("`id` bigint(20) NOT NULL AUTO_INCREMENT,\n");// 默认生成自增主键id
+			}
 			tempSql.append("`create_user` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '创建人员',\n");// 默认生成创建人员
 			tempSql.append("`create_date` datetime DEFAULT NULL COMMENT '创建时间',\n");
 			tempSql.append("`update_user` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '修改人员',\n");
@@ -167,8 +172,8 @@ public class GTableController extends BaseController {
 				if (StringUtils.isNotBlank(chid.getDefaultValue())) {
 					defaultValue = " DEFAULT " + chid.getDefaultValue();
 				}
-				tempSql.append("`" + chid.getName() + "` " + chid.getCode() + " COLLATE utf8_unicode_ci " + isNull +defaultValue
-						+ " COMMENT '" + chid.getComment() + "',\n");
+				tempSql.append("`" + chid.getName() + "` " + chid.getCode() + " COLLATE utf8_unicode_ci " + isNull
+						+ defaultValue + " COMMENT '" + chid.getComment() + "',\n");
 			}
 			tempSql.append("PRIMARY KEY (`id`)\n");
 			tempSql.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='"
