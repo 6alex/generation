@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.ibatis.type.JdbcType;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.idp.common.base.BaseController;
 import com.idp.common.persistence.Page;
-import com.idp.common.util.ExecuteDDL;
+import com.idp.common.util.ExecuteSql;
 import com.idp.common.util.ValidateUtils;
 import com.idp.web.table.entity.GTable;
 import com.idp.web.table.service.GTableService;
@@ -175,8 +174,7 @@ public class GTableController extends BaseController {
 			tempSql.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='"
 					+ gTable.getComment() + "';");
 			result.put("crerateTableSql", tempSql.toString());
-			ExecuteDDL.initParam("dbconfig.properties");
-			ExecuteDDL.createTale(tempSql.toString());
+			ExecuteSql.createTale(tempSql.toString());
 			result.put("tableName", gTable.getCode());
 			return returnSuccessResult(result);
 		} catch (Exception e) {

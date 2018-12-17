@@ -1,13 +1,17 @@
 package com.idp.common.util;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
-public class ExecuteDDL {
+import com.alibaba.druid.util.JdbcUtils;
+
+public class ExecuteSql {
 
 	private static String driver;
 	private static String url;
@@ -15,10 +19,17 @@ public class ExecuteDDL {
 	private static String pass;
 	private static Connection conn;
 	private static Statement stmt;
+	static {
+		try {
+			initParam("dbconfig.properties");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-	public static void initParam(String paramFile) throws Exception {
+	private static void initParam(String paramFile) throws Exception {
 		Properties props = new Properties();
-		InputStream resourceAsStream = ExecuteDDL.class.getClassLoader().getResourceAsStream(paramFile);
+		InputStream resourceAsStream = ExecuteSql.class.getClassLoader().getResourceAsStream(paramFile);
 		props.load(resourceAsStream);
 		driver = props.getProperty("jdbc.driver");
 		url = props.getProperty("jdbc.url");
@@ -41,4 +52,17 @@ public class ExecuteDDL {
 			}
 		}
 	}
+
+	public static List<Map<String, Object>> query(String sql, List<Object> parameters) throws SQLException {
+		return JdbcUtils.executeQuery(conn, sql, parameters);
+	}
+
+	public static int update(String sql, List<Object> parameters) throws SQLException {
+		return JdbcUtils.executeUpdate(conn, sql, parameters);
+	}
+
+	public static void insert(String tableName, Map<String, Object> data) throws SQLException {
+		JdbcUtils.insertToTable(conn, tableName, data);
+	}
+
 }
