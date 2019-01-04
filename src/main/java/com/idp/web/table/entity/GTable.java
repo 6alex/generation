@@ -3,7 +3,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.idp.common.base.BaseEntity;
-import com.idp.web.system.entity.SysDictionary;
 
 /**
  * 

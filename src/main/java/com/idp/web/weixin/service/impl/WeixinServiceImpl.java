@@ -1,7 +1,4 @@
 package com.idp.web.weixin.service.impl;
-import com.idp.web.weixin.service.WeixinService;
-import com.idp.web.weixin.dao.WeixinDao;
-import com.idp.web.weixin.entity.Weixin;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,7 +6,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.idp.common.persistence.Page;
-import com.idp.common.util.ResourceUtils;
+import com.idp.web.weixin.dao.WeixinDao;
+import com.idp.web.weixin.entity.Weixin;
+import com.idp.web.weixin.service.WeixinService;
 
 /**
  * 

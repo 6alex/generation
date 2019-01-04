@@ -13,8 +13,8 @@
 		       	<artifactId>maven-compiler-plugin</artifactId>  
 		       	<version>2.3.2</version>  
 		       	<configuration>  
-		        	<source>1.7</source>  
-		           	<target>1.7</target> 
+		        	<source>1.8</source>  
+		           	<target>1.8</target> 
 		           	<encoding>UTF-8</encoding> 
 		       	</configuration>  
 	   		</plugin>  
@@ -188,7 +188,6 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>${druid.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		
 		<!-- jdbc driver -->
@@ -196,7 +195,6 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		
 		<!-- web -->

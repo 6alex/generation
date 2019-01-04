@@ -1,7 +1,6 @@
 package com.idp.web.weixin.entity;
 import java.io.Serializable;
 import java.util.Date;
-import java.math.BigDecimal;
 
 import com.idp.common.base.BaseEntity;
 
