@@ -54,6 +54,7 @@
 			 and t.sort = #{sort}
 			</if>
 		</where>
+		order by t.sort
 	</select>
 	
 	<select id="getById" parameterType="java.lang.String" resultMap="resultMap">

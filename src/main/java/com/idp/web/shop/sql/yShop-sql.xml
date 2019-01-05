@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idp.web.shop.dao.YShopDao">
+
+	<parameterMap id="parameterMap" type="com.idp.web.shop.entity.YShop"></parameterMap>
+	<resultMap id="resultMap" type="com.idp.web.shop.entity.YShop">
+		<result property="id" column="id"/>
+		<result property="createUser" column="create_user"/>
+		<result property="createDate" column="create_date"/>
+		<result property="updateUser" column="update_user"/>
+		<result property="updateDate" column="update_date"/>
+		<result property="name" column="name"/>
+		<result property="address" column="address"/>
+		<result property="longitude" column="longitude"/>
+		<result property="latitude" column="latitude"/>
+		<result property="description" column="description"/>
+	</resultMap>
+	
+	<sql id="columnSql">
+		<trim suffixOverrides=",">
+			t.id,
+			t.create_user,
+			t.create_date,
+			t.update_user,
+			t.update_date,
+			t.name,
+			t.address,
+			t.longitude,
+			t.latitude,
+			t.description,
+	 	</trim>
+	</sql>
+	
+	<select id="find" parameterMap="parameterMap" resultMap="resultMap">
+		select
+			<include refid="columnSql"></include>
+		from y_shop t
+		<where>
+			<if test="id != null and id != ''">
+				and t.id = #{id}			
+			</if>
+			<if test="createUser != null and createUser != ''">
+				and t.create_user = #{createUser}			
+			</if>
+			<if test="createDate != null and createDate != ''">
+				and t.create_date = #{createDate}			
+			</if>
+			<if test="updateUser != null and updateUser != ''">
+				and t.update_user = #{updateUser}			
+			</if>
+			<if test="updateDate != null and updateDate != ''">
+				and t.update_date = #{updateDate}			
+			</if>
+			<if test="name != null and name != ''">
+				and t.name like concat('%',#{name},'%')
+			</if>
+			<if test="address != null and address != ''">
+				and t.address like concat('%',#{address},'%')
+			</if>
+			<if test="longitude != null and longitude != ''">
+				and t.longitude = #{longitude}			
+			</if>
+			<if test="latitude != null and latitude != ''">
+				and t.latitude = #{latitude}			
+			</if>
+			<if test="description != null and description != ''">
+				and t.description = #{description}			
+			</if>
+		</where>
+	</select>
+	
+	<select id="getById" parameterType="java.lang.Long" resultMap="resultMap">
+		select
+			<include refid="columnSql"></include>
+		from y_shop t
+		where t.id = #{value}
+	</select>
+	
+	<insert id="add" parameterMap="parameterMap">
+		insert into y_shop
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_user,
+			create_date,
+			update_user,
+			update_date,
+			name,
+			address,
+			longitude,
+			latitude,
+			description,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{createUser},
+			#{createDate},
+			#{updateUser},
+			#{updateDate},
+			#{name},
+			#{address},
+			#{longitude},
+			#{latitude},
+			#{description},
+		</trim>
+	</insert>
+	
+	<insert id="batchAdd" parameterType="java.util.List">
+		insert into y_shop
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_user,
+			create_date,
+			update_user,
+			update_date,
+			name,
+			address,
+			longitude,
+			latitude,
+			description,
+		</trim>
+		values
+		<foreach collection="list" item="item" separator=",">
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				#{createUser},
+				#{createDate},
+				#{updateUser},
+				#{updateDate},
+				#{name},
+				#{address},
+				#{longitude},
+				#{latitude},
+				#{description},
+			</trim>
+		</foreach>
+	</insert>
+	
+	<update id="update" parameterMap="parameterMap">
+		update y_shop
+		<set>
+			create_user = #{createUser},
+			create_date = #{createDate},
+			update_user = #{updateUser},
+			update_date = #{updateDate},
+			name = #{name},
+			address = #{address},
+			longitude = #{longitude},
+			latitude = #{latitude},
+			description = #{description},
+		</set>
+		where id = #{id}
+	</update>
+	
+	<update id="updateNotNull" parameterMap="parameterMap">
+		update y_shop
+		<set>
+			<if test="createUser != null">
+			create_user = #{createUser},
+			</if>
+			<if test="createDate != null">
+			create_date = #{createDate},
+			</if>
+			<if test="updateUser != null">
+			update_user = #{updateUser},
+			</if>
+			<if test="updateDate != null">
+			update_date = #{updateDate},
+			</if>
+			<if test="name != null">
+			name = #{name},
+			</if>
+			<if test="address != null">
+			address = #{address},
+			</if>
+			<if test="longitude != null">
+			longitude = #{longitude},
+			</if>
+			<if test="latitude != null">
+			latitude = #{latitude},
+			</if>
+			<if test="description != null">
+			description = #{description},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.Long">
+		delete from y_shop where id = #{value}
+	</delete>
+	
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from y_shop where id in
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+</mapper>

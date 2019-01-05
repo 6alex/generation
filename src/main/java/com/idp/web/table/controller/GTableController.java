@@ -115,7 +115,8 @@ public class GTableController extends BaseController {
 
 		try {
 			String dbColumnTypes[] = { "varchar(32)", "varchar(255)", "datetime", "mediumtext", "int(11)",
-					"double(11,4)", "decimal(20,4)", "bigint(20)" };
+                                       "double(11,4)", "double(11,6)", "decimal(20,4)",
+                                       "bigint(20)" };
 			request.setAttribute("dbColumnTypes", dbColumnTypes);
 			if (ValidateUtils.isNotEmpty(id)) {
 
