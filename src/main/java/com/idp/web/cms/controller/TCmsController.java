@@ -5,6 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -46,6 +50,8 @@ import net.sf.json.JSONObject;
 public class TCmsController extends BaseController {
 
     private Logger      logger = Logger.getLogger(TCmsController.class);
+    @Resource
+    private PlatformTransactionManager transactionManager;
 
     @Resource
     private TCmsService tCmsService;
@@ -128,6 +134,11 @@ public class TCmsController extends BaseController {
     @RequestMapping("/save")
     @ResponseBody
     public String save(TCms tCms) {
+        //controller层事务实现
+        DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
+        defaultTransactionDefinition
+            .setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        TransactionStatus status = transactionManager.getTransaction(defaultTransactionDefinition);
 
         JSONObject json = new JSONObject();
 
@@ -144,8 +155,9 @@ public class TCmsController extends BaseController {
                 tCmsService.add(tCms);
             }
             json.put("result", "save_success");
+            transactionManager.commit(status);
         } catch (Exception e) {
-
+            transactionManager.rollback(status);
             logger.error(e.getMessage(), e);
             json.put("result", "save_fail");
         }
