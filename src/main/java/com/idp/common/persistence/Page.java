@@ -5,12 +5,10 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-/**
- * 分页工具类
- * 
- * @author King
- *
- * @param <T>
+/**   
+ * @Description:           
+ * @author: Alex.wen  
+ * @date:   2019年1月9日 下午6:20:00
  */
 public class Page<T> extends RowBounds {
 
